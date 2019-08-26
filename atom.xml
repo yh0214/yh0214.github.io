@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yh0214.github.io</id>
     <title>Gridea</title>
-    <updated>2019-08-26T07:45:14.270Z</updated>
+    <updated>2019-08-26T07:46:38.516Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yh0214.github.io"/>
     <link rel="self" href="https://yh0214.github.io/atom.xml"/>
@@ -10,55 +10,12 @@
     <icon>https://yh0214.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
     <entry>
-        <title type="html"><![CDATA[tewwetqawe]]></title>
-        <id>https://yh0214.github.io/post/tewwetqawe</id>
-        <link href="https://yh0214.github.io/post/tewwetqawe">
+        <title type="html"><![CDATA[dev]]></title>
+        <id>https://yh0214.github.io/post/dev</id>
+        <link href="https://yh0214.github.io/post/dev">
         </link>
-        <updated>2019-08-26T07:42:24.000Z</updated>
-        <content type="html"><![CDATA[<p>tqwetqwet<br>
-tqwerqwer<br>
-qrwerqwe<br>
-qwreqw<br>
-wqerqwer<br>
-qwerqwer<br>
-qwerqwe<br>
-qwreqwer<br>
-qwerqwer</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tewwetqawe23423]]></title>
-        <id>https://yh0214.github.io/post/tewwetqawe23423</id>
-        <link href="https://yh0214.github.io/post/tewwetqawe23423">
-        </link>
-        <updated>2019-08-26T07:42:24.000Z</updated>
-        <content type="html"><![CDATA[<p>tqwetqwet<br>
-tqwerqwer<br>
-qrwerqwe<br>
-qwreqw<br>
-wqerqwer<br>
-qwerqwer<br>
-qwerqwe<br>
-qwreqwer<br>
-qwerqwer</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[test1]]></title>
-        <id>https://yh0214.github.io/post/test1</id>
-        <link href="https://yh0214.github.io/post/test1">
-        </link>
-        <updated>2019-08-26T07:42:06.000Z</updated>
-        <content type="html"><![CDATA[<p>21312123</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[test]]></title>
-        <id>https://yh0214.github.io/post/test</id>
-        <link href="https://yh0214.github.io/post/test">
-        </link>
-        <updated>2019-08-26T07:40:30.000Z</updated>
-        <content type="html"><![CDATA[<p><img src="https://yh0214.github.io/post-images/1566805242584.jpg" alt=""></p>
+        <updated>2019-08-26T07:46:26.000Z</updated>
+        <content type="html"><![CDATA[<p>123</p>
 ]]></content>
     </entry>
 </feed>
