@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>Python集合及常用操作 | yanghang</title>	
+
+<link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://yh0214.github.io/media/css/night.css";
+
+            display = "https://yh0214.github.io/media/css/night.css";   
+      
+            display = "https://yh0214.github.io/media/css/day.css";
+
+            display = "https://yh0214.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://yh0214.github.io" rel="home">yanghang</a></h1>
+										
+					<h2 class="site-description"></h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">Python集合及常用操作</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-09-04 09:36:03" itemprop="datePublished" pubdate="">2019-09-04</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<h1 id="定义与初始化">定义与初始化</h1>
+<p>集合没有重复元素<br>
+set()可以对可迭代对象进行转化</p>
+<pre><code>In[]：
+s = {1,2,3}
+s
+Out[]：
+{1, 2, 3}
+</code></pre>
+<h1 id="集合增加">集合增加</h1>
+<pre><code>In[]：
+s = {0,1,2}
+s.add(3)
+s
+Out[]：
+{0, 1, 2, 3}
+</code></pre>
+<p>在增加已存在元素时，set集合并不会被追加新元素</p>
+<pre><code>In[]：
+s = {0,1,2,3}
+s.add(3)
+s
+Out[]：
+{0, 1, 2, 3}
+</code></pre>
+<p>再来看一个方法</p>
+<pre><code>In[]：
+help(set.update)
+Out[]：
+**Help on method_descriptor:
+update(...)
+    Update a set with the union of itself and others.**
+</code></pre>
+<p>update方法会把自己和别人联合起来，但是会去重，<strong>没有返回值，原地修改</strong></p>
+<pre><code>In[]：
+s = {0,1,2,3}
+s.update(range(4,7))
+s
+Out[]：
+{0, 1, 2, 3, 4, 5, 6}
+</code></pre>
+<pre><code>In[]：
+s = {0,1,2,3,4,5,6}
+s.update(range(4,9))
+s
+Out[]：
+{0, 1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre>
+<h1 id="集合删除">集合删除</h1>
+<h2 id="setremove">set.remove</h2>
+<pre><code>In[]：
+help(set.remove)
+Out[]：
+Help on method_descriptor:
+remove(...)
+    Remove an element from a set; it must be a member.
+    If the element is not a member, raise a KeyError.
+</code></pre>
+<p>我们看remove的函数签名，2个点：</p>
+<ul>
+<li>会从集合中删除你传入的变量，但是这个变量必须是集合中已有的元素</li>
+<li>如果这个元素不存在，是会抛出异常的</li>
+</ul>
+<pre><code>In[]：
+s = set(range(9))
+s.remove(0)
+s
+Out[]：
+{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre>
+<p>remove<strong>原地修改，不返回值</strong></p>
+<h2 id="setpop">set.pop</h2>
+<pre><code>In[]：
+help(set.pop)
+Out[]：
+Help on method_descriptor:
+pop(...)
+    Remove and return an arbitrary set element.
+    Raises KeyError if the set is empty.
+</code></pre>
+<p>从函数签名得知，pop和remove有一个区别，就是pop会return这个删除的值<br>
+同时，如果集合为空了，还要pop的话，会抛出KeyError信息</p>
+<h2 id="setdiscard">set.discard</h2>
+<pre><code>In[]：
+help(set.discard)
+Out[]：
+Help on method_descriptor:
+discard(...)
+    Remove an element from a set if it is a member.
+    If the element is not a member, do nothing.
+</code></pre>
+<p>discard可以指定删除哪个元素，而不是像pop那样，只能从队首或者队尾删除<br>
+<strong>原地修改，不返回值</strong><br>
+discard删除不存在的元素时，什么也不做</p>
+<h1 id="修改">修改</h1>
+<p>集合不能修改单个元素</p>
+<h1 id="查找">查找</h1>
+<p><strong>集合不能通过索引访问，因为集合不是一个线性结构</strong></p>
+<h1 id="成员运算符">成员运算符</h1>
+<p>因为集合的成员运算和其他线性结构的时间复杂度不同<br>
+做一个简单的效率计算<br>
+使用%%timeit，这是ipython提供的一个magic</p>
+<pre><code>In[]：
+lst = list(range(1000000))
+s = set(range(1000000))
+In[]：
+%%timeit
+-1 in lst
+Out[]：
+8.91 ms ± 126 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+In[]：
+%%timeit
+-1 in s
+Out[]：
+32.3 ns ± 0.193 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+</code></pre>
+<p>在list里面做100次循环，得到平均值是8.91ms上下浮动126us，但是在set中，效率是32.3ns上下浮动0.193ns<br>
+再来看一个：</p>
+<pre><code>In[]：
+lst = list(range(100))
+s = set(range(100))
+In[]：
+%%timeit
+-1 in lst
+Out[]：
+885 ns ± 3.95 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+In[]：
+%%timeit
+-1 in s
+Out[]：
+32.2 ns ± 0.182 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+</code></pre>
+<p>做成员运算时，<strong>列表的效率和列表的规模有关</strong><br>
+做成员运算时，<strong>集合的效率和集合的规模无关</strong><br>
+成员运算</p>
+<ul>
+<li>集合的效率：O(1)</li>
+<li>列表的效率：O(n)</li>
+</ul>
+<p>所以可能的话，当你要做成员运算的时候，就把列表、元组转化成集合做</p>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/python-ji-he-yun-suan" rel="prev"> Python集合运算</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/python" rel="next"> Python解构与封装</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://yh0214.github.io/images/avatar.png" ></div>
+ 
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://yh0214.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Copyright © 2019 yanghang<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

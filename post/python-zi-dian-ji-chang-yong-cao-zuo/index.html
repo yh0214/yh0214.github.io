@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>Python字典及常用操作 | yanghang</title>	
+
+<link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://yh0214.github.io/media/css/night.css";
+
+            display = "https://yh0214.github.io/media/css/night.css";   
+      
+            display = "https://yh0214.github.io/media/css/day.css";
+
+            display = "https://yh0214.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://yh0214.github.io" rel="home">yanghang</a></h1>
+										
+					<h2 class="site-description"></h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">Python字典及常用操作</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-09-04 16:58:27" itemprop="datePublished" pubdate="">2019-09-04</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<h1 id="定义">定义</h1>
+<p>定义字典的方法：<br>
+第一种：直接使用dict()来定义</p>
+<pre><code>In[]：
+d = dict(
+name = 'yh',
+address = '呼呼')
+d
+Out[]：
+{'name': 'yh', 'address': '呼呼'}
+</code></pre>
+<p>第二种：直接使用花括号括起来</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d
+Out[]：
+{'a': 1, 'b': 2}
+</code></pre>
+<p>第三种：<br>
+1、可迭代对象的元素必须是一个二元组<br>
+2、二元组的第0个元素是字典的key，第一个元素为字典的value</p>
+<pre><code>In[]：
+d = dict([('a',1),('b',2)])
+d
+Out[]：
+{'a': 1, 'b': 2}
+</code></pre>
+<p>第四种：传入的可迭代对象元素为key，值为None</p>
+<pre><code>In[]：
+d = dict.fromkeys(range(5))
+d
+Out[]：
+{0: None, 1: None, 2: None, 3: None, 4: None}
+</code></pre>
+<p>传入的可迭代对象的元素为key，值为abc</p>
+<pre><code>In[]：
+d = dict.fromkeys(range(5),'abc')
+d
+Out[]：
+{0: 'abc', 1: 'abc', 2: 'abc', 3: 'abc', 4: 'abc'}
+</code></pre>
+<p>定义一个空字典可以使用{}或者dict()，定义一个空集合需要使用set()</p>
+<h1 id="增加">增加</h1>
+<p>第一种：直接使用key作为下标，对某个不存在的下标赋值</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d['c'] = 3
+d
+Out[]：
+{'a': 1, 'b': 2, 'c': 3}
+</code></pre>
+<p>第二种：通过update方法同时更新多个键值对，也可以将一个新的字典更新到另一个字典里</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.update([('c',3),('p',4)])
+d
+Out[]：
+{'a': 1, 'b': 2, 'c': 3, 'p': 4}
+</code></pre>
+<p>直接传入字典更加方便，若key已存在，则会更新对应的值</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.update({'c':3,'d':4})
+d
+Out[]：
+{'a': 1, 'b': 2, 'c': 3, 'd': 4}
+</code></pre>
+<h1 id="修改">修改</h1>
+<p>当key存在的时候，对下标赋值，会修改这个key对应的value<br>
+也可以使用update修改</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d['a'] = 3
+d
+Out[]：
+{'a': 3, 'b': 2}
+</code></pre>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.update({'b':4})
+d
+Out[]：
+{'a': 1, 'b': 4}
+</code></pre>
+<h1 id="删除">删除</h1>
+<h2 id="dictpop">dict.pop</h2>
+<p>pop需要传入一个key，如果key存在会返回这个key的value</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.pop('a')
+Out[]：
+1
+</code></pre>
+<p>如果key不存在会抛出KeyError，并且会把这个键一起返回</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.pop('c')
+Out[]：
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+&lt;ipython-input-20-72feaa87d842&gt; in &lt;module&gt;
+      1 d = {'a':1,'b':2}
+----&gt; 2 d.pop('c')
+KeyError: 'c'
+</code></pre>
+<p>但是当删除了不存在的key，并且指定了默认值的时候，就不会抛出KeyError</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.pop('c','default')
+Out[]：
+'default'
+</code></pre>
+<h2 id="dictpopitem">dict.popitem</h2>
+<p>随机返回删除的一个kv对的二元组</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.popitem()
+Out[]：
+('b', 2)
+</code></pre>
+<h2 id="dictclear">dict.clear</h2>
+<p>清空一个字典</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.clear()
+d
+Out[]：
+{}
+</code></pre>
+<h2 id="del">del</h2>
+<p>del语句是删除一个键的引用，相当于dict.pop(key)<br>
+但是通常不用del，都用pop</p>
+<h1 id="访问">访问</h1>
+<h2 id="单个元素的访问">单个元素的访问</h2>
+<p>直接使用下标访问，当Key不存在的时候抛出KeyError</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d['a']
+Out[]：
+1
+</code></pre>
+<p>get方法访问不存在的key的时候会返回默认值，未设置时为None，设置时返回设定值</p>
+<pre><code>In[]：
+d = {'a':1,'b':2}
+d.get('c','default')
+Out[]：
+'default'
+</code></pre>
+<h2 id="字典的遍历">字典的遍历</h2>
+<p>直接使用for in遍历字典，遍历的是字典的key<br>
+遍历字典的值可以使用values</p>
+<pre><code>In[]：
+d = {'a':1,'b':2,'c':3}
+for v in d.values():
+    print(v)
+Out[]：
+1
+2
+3
+</code></pre>
+<p>d.items()使用最多，返回一个可迭代对象，元素是字典的所有kv对</p>
+<pre><code>In[]：
+d = {'a':1,'b':2,'c':3}
+for k,v in d.items():
+    print(k,'=&gt;',v)
+Out[]：
+a =&gt; 1
+b =&gt; 2
+c =&gt; 3
+</code></pre>
+<h1 id="字典的限制">字典的限制</h1>
+<ul>
+<li>字典的key不能重复</li>
+<li>字典的key需要可hash</li>
+<li>字典也不能做字典的key</li>
+</ul>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/python-ru-he-shi-xian-yi-ge-zi-dian" rel="prev"> Python如何实现一个字典</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/python-ji-he-yun-suan" rel="next"> Python集合运算</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://yh0214.github.io/images/avatar.png" ></div>
+ 
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://yh0214.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Copyright © 2019 yanghang<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

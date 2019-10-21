@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://yh0214.github.io</id>
+    <title>yanghang</title>
+    <updated>2019-10-21T01:04:32.003Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://yh0214.github.io"/>
+    <link rel="self" href="https://yh0214.github.io/atom.xml"/>
+    <logo>https://yh0214.github.io/images/avatar.png</logo>
+    <icon>https://yh0214.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2019, yanghang</rights>
+    <entry>
+        <title type="html"><![CDATA[面向对象基础]]></title>
+        <id>https://yh0214.github.io/post/mian-xiang-dui-xiang-ji-chu</id>
+        <link href="https://yh0214.github.io/post/mian-xiang-dui-xiang-ji-chu">
+        </link>
+        <updated>2019-10-16T01:07:30.000Z</updated>
+        <content type="html"><![CDATA[<p>面向对象（OOP）是一种编程范式<br>
+范式可以认为是一组方法论<br>
+编程范式就是一组如何组织代码的方法论<br>
+OOP的世界观：<br>
+世界是由对象组成的<br>
+对象具有运动规律和内部状态<br>
+对象之间可以相互作用<br>
+OOP的特征：<br>
+封装<br>
+继承<br>
+多态<br>
+类的定义</p>
+<pre><code>class Door:
+    def __init__(self,number,status):
+        self.number = number
+        self.status = status
+
+door = Door(10001,'closed')
+</code></pre>
+<pre><code>In[]：door.number
+Out[]：10001
+</code></pre>
+<p>看一下self</p>
+<pre><code>class D:
+    def __init__(self):
+        print(id(self))
+</code></pre>
+<pre><code>In[]：d = D()
+Out[]：101570264
+</code></pre>
+<pre><code>In[]：id(d)
+Out[]：101570264
+</code></pre>
+<p>这个self就是d，而且是先有的self<br>
+__init__函数并不是来生成对象的，只是来初始化类<br>
+类中定义方法及调用</p>
+<pre><code>class Door:
+    def __init__(self,number,status):
+        self.number = number
+        self.status = status
+    
+    def open(self):
+        self.status = &quot;opening&quot;
+
+    def close(self):
+        self.status = &quot;closed&quot;
+</code></pre>
+<pre><code>door = Door(10001,'closed')
+</code></pre>
+<pre><code>In[]：door.status
+Out[]：'closed'
+</code></pre>
+<pre><code>door.open()
+</code></pre>
+<pre><code>In[]：door.status
+Out[]：'opening'
+</code></pre>
+<pre><code>door.close()
+</code></pre>
+<pre><code>In[]：door.status
+Out[]：'closed'
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[带参数的装饰器]]></title>
+        <id>https://yh0214.github.io/post/dai-can-shu-de-zhuang-shi-qi</id>
+        <link href="https://yh0214.github.io/post/dai-can-shu-de-zhuang-shi-qi">
+        </link>
+        <updated>2019-10-12T05:57:56.000Z</updated>
+        <content type="html"><![CDATA[<p>首先看一下装饰器的副作用</p>
+<pre><code>import datetime
+def logger(fn):
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end-start))
+        return ret
+    return wrap
+</code></pre>
+<pre><code>import time
+@logger
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<p>使用装饰器定义一个sleep函数，查看它的'<strong>name</strong>'</p>
+<pre><code>In[]:sleep.__name__
+Out[]:'wrap'
+</code></pre>
+<p>是wrap而不是sleep，这就是使用了装饰器后的副作用<br>
+如何解决？<br>
+首先可以使用赋值</p>
+<pre><code>import datetime
+def logger(fn):
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end-start))
+        return ret
+    wrap.__name__ = fn.__name__
+    wrap.__doc__ = fn.__doc__
+    return wrap
+</code></pre>
+<pre><code>import time
+@logger
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]:sleep.__name__
+Out[]:'sleep'
+</code></pre>
+<p>其次也可以写一个函数</p>
+<pre><code>def copy_properties(src,dst):
+    dst.__name__ = src.__name__
+    dst.__doc__ = src.__doc__
+</code></pre>
+<pre><code>import datetime
+
+def logger(fn):
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end-start))
+        return ret
+    copy_properties(fn,wrap)
+    return wrap
+</code></pre>
+<p>柯里化</p>
+<pre><code>def copy_properties(src):
+    def _copy(dst):
+        dst.__name__ = src.__name__
+        dst.__doc__ = src.__doc__
+        return dst
+    return _copy
+</code></pre>
+<p>copy_properties返回的是一个装饰器，可以这么来写</p>
+<pre><code>import datetime
+
+def logger(fn):
+    @copy_properties(fn)
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end-start))
+        return ret
+    return wrap
+</code></pre>
+<p>再看下sleep.<strong>name</strong></p>
+<pre><code>In[]:sleep.__name__
+Out[]:'sleep'
+</code></pre>
+<p>functools</p>
+<pre><code>help(functools.wraps)
+Help on function wraps in module functools:
+
+wraps(wrapped, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',))
+    Decorator factory to apply update_wrapper() to a wrapper function
+    
+    Returns a decorator that invokes update_wrapper() with the decorated
+    function as the wrapper argument and the arguments to wraps() as the
+    remaining arguments. Default arguments are as for update_wrapper().
+    This is a convenience function to simplify applying partial() to
+    update_wrapper().
+</code></pre>
+<p>看看如何使用</p>
+<pre><code>import datetime
+import functools
+def logger(fn):
+    @functools.wraps(fn)
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end - start))
+        return ret
+    return wrap
+</code></pre>
+<pre><code>import time
+@logger
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]:sleep(3)
+Out[]:sleep called took 0:00:03.000353
+</code></pre>
+<p>这个就是copy_properties的由来<br>
+柯里化其实是一个数学的概念，目的是让多个参数变成单个参数<br>
+带参数的装饰器<br>
+假如需要记录大于某个时间的操作，并且可以对这个时间做控制，通过参数传递进来</p>
+<pre><code>import functools
+import datetime
+def logger(s):
+    def _logger(fn):
+        @functools.wraps(fn)
+        def wrap(*args,**kwargs):
+            start = datetime.datetime.now()
+            ret = fn(*args,**kwargs)
+            end = datetime.datetime.now()
+            if (end - start).total_seconds() &gt; s:
+                print('call {} took {}'.format(fn.__name__,end - start))
+            return ret
+        return wrap
+    return _logger
+</code></pre>
+<p>(end - start).total_seconds()将时间格式的时间差转为数字格式</p>
+<pre><code>import time
+@logger(1)
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<p>执行时间大于1s的操作进行记录</p>
+<pre><code>In[]:sleep(2)
+Out[]:call sleep took 0:00:02
+</code></pre>
+<pre><code>In[]:sleep(1)
+Out[]:
+</code></pre>
+<pre><code>In[]:sleep(3)
+Out[]:call sleep took 0:00:03
+</code></pre>
+<p>sleep(2)和sleep(3)执行完后进行了记录，sleep(1)执行完没有进行记录<br>
+@logger(1)拆开就是logger(1)(sleep)<br>
+带参数的装饰器：一个函数，返回一个不带参数的装饰器<br>
+多参数</p>
+<pre><code>import functools
+import datetime
+def logger(s,p = lambda name,t : print('call {} took {} '.format(name,t))):
+    def _logger(fn):
+        @functools.wraps(fn)
+        def wrap(*args,**kwargs):
+            start = datetime.datetime.now()
+            ret = fn(*args,**kwargs)
+            end = datetime.datetime.now()
+            if (end - start).total_seconds() &gt; s:
+                p(fn.__name__,end - start)
+            return ret
+        return wrap
+    return _logger
+</code></pre>
+<pre><code>import time
+@logger(1)
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]：sleep(2)
+Out[]：call sleep took 0:00:02 
+</code></pre>
+<pre><code>import time
+@logger(1,p = lambda name,t : print('hahahaha'))
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]：sleep(2)
+Out[]：hahahaha
+</code></pre>
+<p>超时后的打印逻辑可以进行自定义了<br>
+作为装饰器，可以有多层，但是超过两层时首先要命名一个变量，然后再使用@变量()就可以了<br>
+例如有logger _logger __logger三层时</p>
+<pre><code>import functools
+import datetime
+def logger(s):
+    def _logger(p = lambda name,t : print('call {} took {} '.format(name,t))):
+        def __logger(fn):
+            @functools.wraps(fn)
+            def wrap(*args,**kwargs):
+                start = datetime.datetime.now()
+                ret = fn(*args,**kwargs)
+                end = datetime.datetime.now()
+                if (end - start).total_seconds() &gt; s:
+                    p(fn.__name__,end - start)
+                return ret
+            return wrap
+        return __logger
+    return _logger
+</code></pre>
+<pre><code>import time
+logger2s = logger(1)
+@logger2s()
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]:sleep(3)
+Out[]:call sleep took 0:00:03 
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[装饰器]]></title>
+        <id>https://yh0214.github.io/post/zhuang-shi-qi</id>
+        <link href="https://yh0214.github.io/post/zhuang-shi-qi">
+        </link>
+        <updated>2019-10-10T05:48:00.000Z</updated>
+        <content type="html"><![CDATA[<p>先来看一个函数，logger</p>
+<pre><code>def logger(fn):
+    def warp(*args,**kwargs):
+        print('call {}'.format(fn.__name__))
+        ret = fn(*args,**kwargs)
+        print('{} called'.format(fn.__name__))
+        return ret
+    return warp
+</code></pre>
+<p>这个函数的参数是函数，返回值也是一个函数<br>
+先定义一个加函数，作为参数传入logger</p>
+<pre><code>def add(x,y):
+    return x + y
+</code></pre>
+<p>然后定义一个函数</p>
+<pre><code>In[]：
+loged_add = logger(add)
+loged_add(3,5)
+Out[]：
+call add
+add called
+8
+</code></pre>
+<p>loged_add = logger(add)这一步是把add函数作为参数传入logger中，这个时候没有发生任何计算，loged_add是一个函数，这个函数就是wrap<br>
+可以查看下loged_add</p>
+<pre><code>In[]：loged_add
+Out[]：&lt;function __main__.logger.&lt;locals&gt;.warp(*args, **kwargs)&gt;
+</code></pre>
+<p>以上这种场景通常用于作为参数的函数执行前后需要一些额外操作<br>
+再引入一个东西</p>
+<pre><code>import datetime
+
+def logger(fn):
+    def wrap(*args,**kwargs):
+        start = datetime.datetime.now()
+        ret = fn(*args,**kwargs)
+        end = datetime.datetime.now()
+        print('{} called took {}'.format(fn.__name__,end-start))
+        return ret
+    return wrap
+</code></pre>
+<p>可以看看这个函数执行了多久</p>
+<pre><code>import time
+
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<pre><code>In[]：loged_sleep = logger(sleep)
+</code></pre>
+<pre><code>In[]：loged_sleep(3)
+Out[]：sleep called took 0:00:03
+</code></pre>
+<p>装饰器<br>
+换一种语法糖</p>
+<pre><code>@logger
+def sleep(x):
+    time.sleep(x)
+</code></pre>
+<p>这时候，就可以将封装发生在函数定义的时候<br>
+这是python的一种语法，可以更方便的去定义我们的函数<br>
+@logger的方式和loged_add = logger(add)是等效的<br>
+参数是一个函数，返回值是一个函数的函数，就可以作为装饰器<br>
+只有用@语法来写的时候，才称为装饰器。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[高阶函数]]></title>
+        <id>https://yh0214.github.io/post/gao-jie-han-shu</id>
+        <link href="https://yh0214.github.io/post/gao-jie-han-shu">
+        </link>
+        <updated>2019-10-09T03:30:56.000Z</updated>
+        <content type="html"><![CDATA[<p>首先看一个函数</p>
+<pre><code>def counter(base):
+    def inc(x=1):
+        nonlocal base
+        base += x
+        return base
+    return inc
+</code></pre>
+<pre><code>In[]：inc = counter(3)
+In[]：inc(3)
+Out[]：6
+</code></pre>
+<pre><code>In[]：inc(3)
+Out[]：9
+</code></pre>
+<p>这种返回值是一个函数或者参数是函数的情况，就称为高阶函数<br>
+第一种情况：返回值是函数<br>
+第二种情况：参数是函数<br>
+这两种情况的函数，就叫做高阶函数<br>
+高阶函数的作用<br>
+首先看一个排序函数，传入一个可迭代对象</p>
+<pre><code>def sort(it):
+    ret = []
+    for x in it:
+        for i,e in enumerate(ret):
+            if x &gt; e:
+                ret.insert(i,x)
+                break
+        else:
+            ret.append(x)
+    return ret
+</code></pre>
+<pre><code>In[]：sort([1,4,3,8,2,9,0,7])
+Out[]：[9, 8, 7, 4, 3, 2, 1, 0]
+</code></pre>
+<p>如果要从小到大排列，只需要将大于改成小于就好了，x&lt;e<br>
+一般要实现顺序排列和逆序排列需要两个函数，但是可以通过加一个判断，将两个功能通过一个函数实现</p>
+<pre><code>def sort(it,r=False):
+    ret = []
+    for x in it:
+        for i,e in enumerate(ret):
+            if r:
+                if x &lt; e:
+                    ret.insert(i,x)
+                    break
+            else:
+                if x &gt; e:
+                    ret.insert(i,x)
+                    break
+        else:
+            ret.append(x)
+    return ret
+</code></pre>
+<p>还可以再次进行优化，将if判断抽出来，作为一个函数</p>
+<pre><code>def sort(it,r=False):
+    def cmp(a,b):
+        if r:
+            return a &lt; b
+        else:
+            return a &gt; b
+    ret = []
+    for x in it:
+        for i,e in enumerate(ret):
+            if cmp(x,e):
+                ret.insert(i,x)
+                break
+        else:
+            ret.append(x)
+    return ret
+</code></pre>
+<p>那将cmp函数移到外面行不行呢？可以将cmp作为一个参数传入</p>
+<pre><code>def sort(it,cmp=lambda a,b :a &lt; b):
+    ret = []
+    for x in it:
+        for i,e in enumerate(ret):
+            if cmp(x,e):
+                ret.insert(i,x)
+                break        
+        else:
+            ret.append(x)
+    return ret
+</code></pre>
+<pre><code>In[]：sort([1,4,3,8,2,9,0,7],lambda a,b :a &gt; b)
+Out[]：[9, 8, 7, 4, 3, 2, 1, 0]
+
+</code></pre>
+<pre><code>In[]：sort([1,4,3,8,2,9,0,7],lambda a,b :a &lt; b)
+Out[]：[0, 1, 2, 3, 4, 7, 8, 9]
+</code></pre>
+<p>函数作为返回值：通常是用于闭包的场景，需要封装一些变量<br>
+函数作为参数：通常是用于大多数逻辑固定，少部分逻辑不固定的场景</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[生成器]]></title>
+        <id>https://yh0214.github.io/post/sheng-cheng-qi</id>
+        <link href="https://yh0214.github.io/post/sheng-cheng-qi">
+        </link>
+        <updated>2019-09-23T01:42:18.000Z</updated>
+        <content type="html"><![CDATA[<p>生成器其实也是一个函数</p>
+<pre><code>def g():
+    for x in range(10):
+        yield x
+</code></pre>
+<p>使用了一个新的关键字yield，没有return会不会报错？</p>
+<pre><code>In[]：
+r = g()
+r
+Out[]：&lt;generator object g at 0x000000000613E1B0&gt;
+</code></pre>
+<p>可以看到返回的是一个generator</p>
+<pre><code>In[]：dir(r)
+Out[]：
+['__class__',
+ '__del__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__iter__',
+ '__le__',
+ '__lt__',
+ '__name__',
+ '__ne__',
+ '__new__',
+ '__next__',
+ '__qualname__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ 'close',
+ 'gi_code',
+ 'gi_frame',
+ 'gi_running',
+ 'gi_yieldfrom',
+ 'send',
+ 'throw']
+</code></pre>
+<p>它有'<strong>iter</strong>'方法，是一个可迭代对象<br>
+它有'<strong>next</strong>'方法，是一个迭代<br>
+使用next调用一下</p>
+<pre><code>In[]：next(r)
+Out[]：0
+</code></pre>
+<pre><code>In[]：next(r)
+Out[]：1
+</code></pre>
+<p>返回的是函数中x的值<br>
+有一个yield关键字，这个是一个迭代器，是迭代器里面的一个特殊内容，叫生成器<br>
+执行完一次r = g()，现场应该被销毁了，但是r还是有值，还是可以继续调用next，事实上，函数的现场并没有被销毁，这就是生成器函数和普通函数不太一样的地方<br>
+看下生成器是如何工作的</p>
+<pre><code>def gen():
+    print('a')
+    yield 1
+    print('b')
+    yield 2
+    return 3
+</code></pre>
+<p>定义了一个函数，有2个yield，1个return</p>
+<pre><code>In[]：g = gen()
+g
+Out[]：&lt;generator object gen at 0x0000000003259570&gt;
+</code></pre>
+<p>理论上，gen里面有return，应该有返回值，但是这个g还是一个generator，说明函数并没有被执行<br>
+接下来使用next调用</p>
+<pre><code>In[]：next(g)
+Out[]：
+a
+1
+</code></pre>
+<p>在这里，执行到第一个yield，就停止执行了<br>
+再执行一次next(g)</p>
+<pre><code>In[]：next(g)
+Out[]：
+b
+2
+</code></pre>
+<p>打印出了b，然后到2就又停止了，而之前的a并没有被打印出来，说明现场保留了<br>
+再执行一次next(g)</p>
+<pre><code>In[]：next(g)
+Out[]：
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+ in 
+----&gt; 1 next(g)
+
+StopIteration: 3
+</code></pre>
+<p>没有更多yield的时候，抛出StopIteration异常，还有一点需要注意的是，这个异常值就是它的返回值，没有返回值的话异常值就为空<br>
+总结一下：带yield语句的函数称为生成器函数，生成器函数的返回值是生成器<br>
+特点：</p>
+<ul>
+<li>生成器函数执行的时候，不会执行函数体（注意，这里是说生成器函数执行的时候，不是生成器执行的时候）</li>
+<li>当next生成器的时候，当前代码会执行到之后的第一个yield，会弹出值，并暂停函数</li>
+<li>当再次执行next生成器的时候，从上次暂停处开始往下执行</li>
+<li>当没有多余的yield的时候，会抛出StopIteration异常，如果函数有返回值，异常的value是函数的返回值</li>
+</ul>
+<p>生成器是惰性求值的，先来写一个计数器</p>
+<pre><code>def counter():
+    x = 0
+    while True:
+        x += 1
+        yield x
+
+def inc(c):
+    return next(c)
+</code></pre>
+<pre><code>In[]：c = counter()
+In[]: inc(c)
+Out[]：1
+</code></pre>
+<p>这样每次执行inc(c)都可以得到一个+1的值<br>
+还可以封装的更好</p>
+<pre><code>def inc():
+    c = counter()
+    return lambda : next(c)
+</code></pre>
+<p>还有一种更好的方法，可以把counter封装到inc里面</p>
+<pre><code>def inc():
+    def counter():
+        x = 0
+        while True:
+            x += 1
+            yield x
+    c = counter()
+    return lambda : next(c)
+</code></pre>
+<pre><code>In[]：incr = inc()
+In[]: incr()
+Out[]：1
+</code></pre>
+<pre><code>In[]：incr()
+Out[]：2
+</code></pre>
+<p>难点</p>
+<pre><code>def make_inc():
+    def counter():
+        x = 0
+        while True:
+            x += 1
+            yield x
+    c = counter()
+    return next(c)
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<p>为什么再次执行还是得到1？<br>
+每次都会初始化一个c，给它一个新的生成器，所以每次都是1<br>
+使用lambda的话，只会生成一次c，后面每次都是调用这个函数<br>
+应用<br>
+斐波那契数列<br>
+首先看使用递归实现，递归非常慢</p>
+<pre><code>def fib(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1
+    return fib(n-1) + fib(n-2)
+</code></pre>
+<p>还可以使用生成器实现</p>
+<pre><code>def fib():
+    a = 0
+    b = 1
+    while True:
+        a,b = b,a + b
+        yield a
+</code></pre>
+<pre><code>In[]：
+f = fib()
+for _ in range(5):
+    print(next(f))
+Out[]：
+1
+1
+2
+3
+5
+</code></pre>
+<p>生成器可以解决递归问题<br>
+协程是生成器的高级应用</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[匿名函数]]></title>
+        <id>https://yh0214.github.io/post/ni-ming-han-shu</id>
+        <link href="https://yh0214.github.io/post/ni-ming-han-shu">
+        </link>
+        <updated>2019-09-19T14:45:17.000Z</updated>
+        <content type="html"><![CDATA[<p>所谓匿名函数就是没有名字的函数，用lambda这个关键字来定义<br>
+lambda后面接一个参数x，然后用冒号分隔，然后定义一个函数体</p>
+<pre><code>lambda x : x + 1
+</code></pre>
+<p>冒号后面是不换行的</p>
+<pre><code>In[]：(lambda x : x + 1)(3)
+Out[]：4
+</code></pre>
+<pre><code>In[]：
+f = lambda x : x + 1
+f(3)
+Out[]：4
+</code></pre>
+<p>匿名函数（lambda表达式）只能写在一行上，所以也被称为单行函数<br>
+匿名函数可以不传参数，直接返回值</p>
+<pre><code>In[]：
+f = lambda : 0
+f()
+Out[]：0
+</code></pre>
+<p>匿名函数传递多个参数也是可以的</p>
+<pre><code>In[]：
+f = lambda x,y : x + y
+f(3,5)
+Out[]：8
+</code></pre>
+<p>匿名函数也是支持默认参数的</p>
+<pre><code>In[]：
+(lambda x,y=3:x + y)(3)
+Out[]：6
+</code></pre>
+<p>匿名函数也是支持位置可变参数的</p>
+<pre><code>In[]：
+(lambda *args:args)(*range(3))
+Out[]：(0, 1, 2)
+</code></pre>
+<p>关键字可变参数也是ok的</p>
+<pre><code>In[]：
+(lambda *args,**kwargs:print(args,kwargs))(*range(3),**{str(x):x for x in range(3)})
+Out[]：(0, 1, 2) {'0': 0, '1': 1, '2': 2}
+</code></pre>
+<p>再来看下keyword-only参数</p>
+<pre><code>In[]：
+(lambda *,x : x)(x = 3)
+Out[]：3
+</code></pre>
+<h1 id="匿名函数的应用">匿名函数的应用</h1>
+<h2 id="sorted">sorted</h2>
+<pre><code>In[]：
+help(sorted)
+Out[]：
+Help on built-in function sorted in module builtins:
+sorted(iterable, /, *, key=None, reverse=False)
+    Return a new list containing all items from the iterable in ascending order.
+    A custom key function can be supplied to customize the sort order, and the
+    reverse flag can be set to request the result in descending order.
+</code></pre>
+<p>里面传一个可迭代对象，key默认是None，然后reverse代表反转<br>
+假设有一个User对象，它有name和age两个属性</p>
+<pre><code>from collections import namedtuple
+User = namedtuple('User',['name','age'])
+</code></pre>
+<p>然后创建一个User的对象列表</p>
+<pre><code>users = [User('yh',18),User('max',16),User('xxx',32)]
+</code></pre>
+<p>在不使用匿名函数的情况下，让users根据age来进行排序</p>
+<pre><code>In[]：
+def get_age(user):
+    return user.age
+sorted(users,key=get_age)
+Out[]：
+[User(name='max', age=16), User(name='yh', age=18), User(name='xxx', age=32)]
+</code></pre>
+<p>在使用匿名函数的情况下，让users根据age来进行排序</p>
+<pre><code>In[]：sorted(users,key = lambda x : x.age)
+Out[]：[User(name='max', age=16), User(name='yh', age=18), User(name='xxx', age=32)]
+</code></pre>
+<p>当函数作为参数时，需要使用匿名函数</p>
+<h2 id="map">map</h2>
+<pre><code>In[]：map(lambda x:x*2,[1,2,3])
+Out[]：&lt;map at 0x64671d0&gt;
+</code></pre>
+<p>但是在python3中把map改成一个生成器了，可以使用list转换一下</p>
+<pre><code>In[]：list(map(lambda x:x*2,[1,2,3]))
+Out[]：[2, 4, 6]
+</code></pre>
+<h2 id="filter">Filter</h2>
+<p>把每个可迭代对象传进来，如果函数返回True，就存在，返回False，就不存在</p>
+<pre><code>In[]：list(filter(lambda x:x&lt;30,[16,18,32]))
+Out[]：[16, 18]
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[函数的执行流程 & 递归函数]]></title>
+        <id>https://yh0214.github.io/post/han-shu-de-zhi-xing-liu-cheng-and-di-gui-han-shu</id>
+        <link href="https://yh0214.github.io/post/han-shu-de-zhi-xing-liu-cheng-and-di-gui-han-shu">
+        </link>
+        <updated>2019-09-19T14:24:55.000Z</updated>
+        <content type="html"><![CDATA[<p>函数的执行流程<br>
+当调用函数的时候，解释器会把当前现场压栈，然后执行被调函数。被调函数执行完成，解释器弹出当前栈顶，恢复现场<br>
+递归函数<br>
+程序调用自身的编程技巧称为递归</p>
+<pre><code>def fib(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1
+    return fib(n-1) + fib(n-2)
+</code></pre>
+<p><strong>递归函数必须要有退出条件</strong></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python函数的作用域]]></title>
+        <id>https://yh0214.github.io/post/python-han-shu-de-zuo-yong-yu</id>
+        <link href="https://yh0214.github.io/post/python-han-shu-de-zuo-yong-yu">
+        </link>
+        <updated>2019-09-16T09:02:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="定义">定义</h1>
+<p>一个变量的可见范围叫做这个变量的作用域</p>
+<h1 id="全局作用域">全局作用域</h1>
+<h1 id="局部作用域">局部作用域</h1>
+<p>变量的作用域为变量定义同级的作用域，也就是在哪一个级别定义的，在哪一个级别就可见</p>
+<h1 id="上-下级作用域">上、下级作用域</h1>
+<p>上级作用域对下级作用域是只读的，read-only的<br>
+不同作用域变量不可见，但是下级作用域可以对上级作用域的变量只读可见</p>
+<h1 id="全局变量global">全局变量global</h1>
+<p>global关键字可以提升变量作用域为全局变量<br>
+global的提升只对本作用域有用，那么我们需要让他在其他局部作用域有用，就需要再标记</p>
+<h1 id="闭包函数">闭包函数</h1>
+<pre><code>def counter():
+    c = [0]
+    def inc():
+        c[0] += 1
+        return c[0]
+    return inc
+f = counter()
+f()
+</code></pre>
+<p>这种形式我们称为闭包，函数已经结束，但是函数内部部分变量的引用还存在<br>
+理论上执行完f = counter()后，这个c已经没有了，但是我们通过inc可以继续访问，这种就称为闭包</p>
+<h1 id="局部变量">局部变量</h1>
+<pre><code>def counter():
+    x = 0
+    def inc():
+        nonlocal x
+        x += 1
+        return x
+    return inc
+f = counter()
+f()
+</code></pre>
+<p>nonlocal关键字用来标记一个变量由他的上级作用域定义，通过nonlocal标记的变量可读可写</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python函数的基础]]></title>
+        <id>https://yh0214.github.io/post/python-han-shu-de-ji-chu</id>
+        <link href="https://yh0214.github.io/post/python-han-shu-de-ji-chu">
+        </link>
+        <updated>2019-09-16T02:11:16.000Z</updated>
+        <content type="html"><![CDATA[<p>函数是Python里组织代码的最小单元<br>
+定义函数的时候，并不会执行函数体<br>
+当调用函数的时候，才会执行其中的语句块<br>
+Python在导入模块的时候，是会去执行一遍该文件</p>
+<h1 id="函数参数">函数参数</h1>
+<p>位置参数<br>
+关键字参数<br>
+注意：<strong>当位置参数和关键字参数混合使用时，位置参数必须在前面，否则会报语法错误</strong><br>
+默认参数<br>
+参数可以有默认值，当一个参数有默认值时，调用时如果不传递此此参数，会有默认值<br>
+注意：带默认值的参数必须在不带默认值的参数之后<br>
+位置可变参数<br>
+在参数前面加一个星号</p>
+<pre><code>In[]：
+def sum(*lst):
+    ret = 0
+    for x in lst:
+        ret += x
+    return ret
+print(sum(1,2,3))
+Out[]：
+6
+</code></pre>
+<p>关键字可变参数</p>
+<pre><code>In[]：
+def connect(**kwargs):
+    print(type(kwargs))
+    print(kwargs)
+connect(host='127.0.0.1',port=3601)
+Out[]：
+&lt;class 'dict'&gt;
+{'host': '127.0.0.1', 'port': 3601}
+</code></pre>
+<p>注意：当位置可变参数和关键字可变参数一起使用时，位置可变参数必须在前面<br>
+通常来说：<br>
+默认参数靠后<br>
+可变参数靠后<br>
+默认参数和可变参数不同时出现</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python可迭代对象与迭代器]]></title>
+        <id>https://yh0214.github.io/post/python-ke-die-dai-dui-xiang-yu-die-dai-qi</id>
+        <link href="https://yh0214.github.io/post/python-ke-die-dai-dui-xiang-yu-die-dai-qi">
+        </link>
+        <updated>2019-09-10T07:03:31.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="可迭代对象">可迭代对象</h1>
+<pre><code>In[]：
+r = range(10)
+r.__iter__
+Out[]：
+&lt;method-wrapper '__iter__' of range object at 0x0000000006013570&gt;
+</code></pre>
+<p>有__iter__方法的对象叫可迭代对象<br>
+for in语句需要可迭代对象</p>
+<h1 id="迭代器">迭代器</h1>
+<p>迭代器是可迭代对象</p>
+<pre><code>In[]：
+it = iter(range(10))
+it.__next__
+Out[]：
+&lt;method-wrapper '__next__' of range_iterator object at 0x000000000628CD50&gt;
+</code></pre>
+<p>有__next__方法的可迭代对象叫迭代器<br>
+可迭代对象可以转换为迭代器<br>
+iter函数可以把一个可迭代对象转换为迭代器</p>
+]]></content>
+    </entry>
+</feed>

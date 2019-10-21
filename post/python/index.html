@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>Python解构与封装 | yanghang</title>	
+
+<link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://yh0214.github.io/media/css/night.css";
+
+            display = "https://yh0214.github.io/media/css/night.css";   
+      
+            display = "https://yh0214.github.io/media/css/day.css";
+
+            display = "https://yh0214.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://yh0214.github.io" rel="home">yanghang</a></h1>
+										
+					<h2 class="site-description"></h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">Python解构与封装</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-09-04 08:34:40" itemprop="datePublished" pubdate="">2019-09-04</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<h1 id="解构">解构</h1>
+<p>先来看一个栗子：</p>
+<pre><code>In[]：
+x = 1
+y = 2
+x,y = y,x
+print(x,y)
+Out[]：
+2 1
+</code></pre>
+<p>结构顾名思义，把一个整体拆成多个小个体</p>
+<pre><code>In[]：
+lst = [1,2]
+first,second = lst
+print(first,second)
+Out[]：
+1 2
+</code></pre>
+<p>这样的一个过程我们称之为解构<br>
+<strong>解构</strong>：按照元素顺序，把<strong>线性结构</strong>的元素赋值给变量</p>
+<h1 id="封装">封装</h1>
+<p>封装是解构的逆向操作</p>
+<pre><code>In[]：
+t = 1,2
+t
+Out[]：
+(1, 2)
+</code></pre>
+<h1 id="python3中解构的变化">python3中解构的变化</h1>
+<h2 id="八大变体">八大变体</h2>
+<p>第一种变体：head代表第一个元素，tail是最后一个元素，mid是中间所有元素：</p>
+<pre><code>In[]：
+lst = list(range(10))
+head,*mid,tail = lst
+print(head)
+print(mid)
+print(tail)
+Out[]：
+0
+[1, 2, 3, 4, 5, 6, 7, 8]
+9
+</code></pre>
+<p>第二种变体：加星号的tail是除了第一个外的所有元素：</p>
+<pre><code>In[]：
+lst = list(range(10))
+head,*tail = lst
+print(head)
+print(tail)
+Out[]：
+0
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+<p>第三种变体：加星号的head是除了最后一个外的所有元素</p>
+<pre><code>In[]：
+lst = list(range(10))
+*head,tail = lst
+print(head)
+print(tail)
+Out[]：
+[0, 1, 2, 3, 4, 5, 6, 7, 8]
+9
+</code></pre>
+<p>第四种变体：左边只有一个加星号的变量，<strong>这个是不行的</strong></p>
+<pre><code>In[]：
+lst = list(range(10))
+*lst2 = lst
+Out[]：
+*lst2 = lst
+  File &quot;&lt;ipython-input-14-d0dbc72204e9&gt;&quot;, line 5
+SyntaxError: starred assignment target must be in a list or tuple
+</code></pre>
+<p>第五种变体：左边有两个或两个以上加星号的，<strong>是不行的</strong></p>
+<pre><code>In[]：
+lst = list(range(10))
+head,*m1,*m2,tail = lst
+Out[]：
+  File &quot;&lt;ipython-input-15-8f61a35156b2&gt;&quot;, line 5
+SyntaxError: two starred expressions in assignment
+</code></pre>
+<p>第六种变体：左边加上一些其他变量</p>
+<pre><code>In[]：
+lst = list(range(10))
+first,second,*other,last = lst
+print(first)
+print(second)
+print(other)
+print(last)
+Out[]：
+lst = list(range(10))
+first,second,*other,last = lst
+print(first)
+print(second)
+print(other)
+print(last)
+lst = list(range(10))
+first,second,*other,last = lst
+print(first)
+print(second)
+print(other)
+print(last)
+0
+1
+[2, 3, 4, 5, 6, 7, 8]
+9
+</code></pre>
+<p>第七种变体：当左边变量超过右边元素个数的时候，<strong>是不允许的</strong></p>
+<pre><code>In[]：
+lst = list(range(2))
+v1,v2,v3 = lst
+Out[]：
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-20-cc6bc96adc53&gt; in &lt;module&gt;
+      1 lst = list(range(2))
+----&gt; 2 v1,v2,v3 = lst
+ValueError: not enough values to unpack (expected 3, got 2)
+</code></pre>
+<p>第八种变体：当左边变量数小于右边变量数，且左边没有加星号的变量，<strong>是不允许的</strong></p>
+<pre><code>In[]：
+lst = list(range(10))
+v1,v2,v3 = lst
+Out[]：
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-21-03d03897cf0b&gt; in &lt;module&gt;
+      1 lst = list(range(10))
+----&gt; 2 v1,v2,v3 = lst
+ValueError: too many values to unpack (expected 3)
+</code></pre>
+<p><strong>小结：</strong><br>
+元素按照顺序赋值给变量<br>
+变量和元素必须匹配<br>
+加星号变量，可以接受任意个数的元素<br>
+加星号的变量不能单独出现</p>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/python-ji-he-ji-chang-yong-cao-zuo" rel="prev"> Python集合及常用操作</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/python-xian-xing-jie-gou-yu-qie-pian" rel="next"> Python线性结构与切片</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://yh0214.github.io/images/avatar.png" ></div>
+ 
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://yh0214.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Copyright © 2019 yanghang<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>Python列表及其常用操作 | yanghang</title>	
+
+<link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://yh0214.github.io/media/css/night.css";
+
+            display = "https://yh0214.github.io/media/css/night.css";   
+      
+            display = "https://yh0214.github.io/media/css/day.css";
+
+            display = "https://yh0214.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://yh0214.github.io" rel="home">yanghang</a></h1>
+										
+					<h2 class="site-description"></h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">Python列表及其常用操作</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-08-28 14:07:15" itemprop="datePublished" pubdate="">2019-08-28</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<h1 id="概念">概念</h1>
+<p>在其他语言里，会叫这种数据类型为数组，array，在python里，我们叫列表，list<br>
+列表是一种数据结构<br>
+列表是一个序列，用于顺序的存储数据。<br>
+序列是python中最基本的数据结构。<br>
+序列中的每个元素都分配一个数字：索引</p>
+<pre><code>l = list()
+l = []
+l = [1,2,3]
+l = list(range(1,10))
+</code></pre>
+<p>通常在定义列表的时候用[]，在转化可迭代对象为列表的时候用list函数</p>
+<h1 id="访问列表">访问列表</h1>
+<p>定义一个1-9的列表</p>
+<pre><code>l = list(range(1,10))
+</code></pre>
+<p>通过下标访问，下标从0开始</p>
+<pre><code>l[0]
+</code></pre>
+<p>当下标超出范围时，会抛出IndexError</p>
+<pre><code>l[100]
+</code></pre>
+<p>负数索引从右边开始，并且索引从-1开始</p>
+<h2 id="listindex">list.index</h2>
+<p>也可以通过help函数查看所有方法的函数签名，也就是函数说明</p>
+<pre><code>In[]：help(list.index)
+Out[]：
+Help on method_descriptor:
+index(self, value, start=0, stop=9223372036854775807, /)
+    Return first index of value.
+    Raises ValueError if the value is not present.
+</code></pre>
+<p>这里函数签名中，stop有个默认值，也就是到列表哪一个位置结束，这也是它的最大值了，超出了可能就内存溢出。<br>
+&quot;list.index&quot;方法返回查找到的第一个索引</p>
+<pre><code>l = list(range(1,10))
+l.index(4)
+new_l = [1,2,3,2,4,3,5]
+new_l.index(2)
+new_l.index(2,2,3)
+new_l.index(2,-1)
+new_l.index(2,-4,-1)
+</code></pre>
+<p>list.index的start和end参数可以为负数，但是在查找过程中还是从左到右的顺序<br>
+当查找不到元素时，抛出错误ValueError。</p>
+<h3 id="listindex函数解读">list.index函数解读</h3>
+<p>实现list.index函数：</p>
+<pre><code>def index(lst,val,start=0,end=-1):
+    i = start
+    for x in lst[start:end]:
+        if x == val:
+            return i
+        i += 1
+    raise ValueError()
+</code></pre>
+<h2 id="listcount">list.count</h2>
+<p>查看一下list.count的函数签名</p>
+<pre><code>In[]：help(list.count)
+Out[]：
+Help on method_descriptor:
+count(self, value, /)
+    Return number of occurrences of value.
+</code></pre>
+<p>list.count，统计你要查询的字符在列表里出现的次数</p>
+<pre><code>new_l = [1,2,3,2,4,3,5]
+new_l.count(5)
+new_l.count(10)
+</code></pre>
+<h3 id="listcount函数解读">list.count函数解读</h3>
+<p>实现list.count函数：</p>
+<pre><code>def count(lst,value):
+    c = 0
+    for x in lst:
+        if x == value:
+            c += 1
+    return c
+</code></pre>
+<h2 id="总结">总结</h2>
+<ul>
+<li>list通过索引访问元素</li>
+<li>index方法根据值返回第一个索引</li>
+<li>count方法返回元素在列表里的个数</li>
+</ul>
+<p>index和count的时间复杂度是O(n)</p>
+<h1 id="列表修改">列表修改</h1>
+<p>通过索引的方式进行赋值即可</p>
+<pre><code>In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l[2] = 5
+print(new_l)
+Out[]：
+[1, 2, 5, 2, 4, 3, 5]
+</code></pre>
+<p>超出范围还是会抛出IndexError</p>
+<pre><code>In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l[10] = 10
+Out[]：
+IndexError                                Traceback (most recent call last)
+&lt;ipython-input-3-daf879895697&gt; in &lt;module&gt;
+      1 new_l = [1,2,3,2,4,3,5]
+----&gt; 2 new_l[10] = 10
+IndexError: list assignment index out of range
+</code></pre>
+<h1 id="列表增加">列表增加</h1>
+<h2 id="listappend">list.append</h2>
+<p>先用help函数看下它的函数签名</p>
+<pre><code>In[]：
+help(list.append)
+Out[]：
+Help on method_descriptor:
+append(self, object, /)
+    Append object to the end of the list.
+</code></pre>
+<p>append<strong>原地修改list，返回值是None</strong>,直接在最后加一位，我们称之为追加</p>
+<pre><code>In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l.append(99)
+print(new_l)
+Out[]：
+[1, 2, 3, 2, 4, 3, 5, 99]
+</code></pre>
+<h2 id="listinsert">list.insert</h2>
+<p>在第i个元素前插入e</p>
+<pre><code>In[]：
+help(list.insert)
+Out[]：
+Help on method_descriptor:
+insert(self, index, object, /)
+    Insert object before index.
+</code></pre>
+<pre><code>In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l.insert(1,99)
+print(new_l)
+Out[]：
+[1, 99, 2, 3, 2, 4, 3, 5]
+</code></pre>
+<p><strong>当越界的时候，自动往左或往右插入该值，这点非常重要，它并不会报错</strong></p>
+<pre><code>In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l.insert(100,99)
+print(new_l)
+Out[]：
+[1, 2, 3, 2, 4, 3, 5, 99]
+In[]：
+new_l = [1,2,3,2,4,3,5]
+new_l.insert(-100,99)
+print(new_l)
+Out[]：
+[99, 1, 2, 3, 2, 4, 3, 5]
+</code></pre>
+<p>append和insert的效率：</p>
+<ul>
+<li>append的时间复杂度是O(1)，常数时间，效率和数据的规模无关</li>
+<li>insert的时间复杂度是O(n)，线性时间，效率和数据规模线性相关</li>
+</ul>
+<p><strong>尽量使用append</strong></p>
+<h2 id="listextend">list.extend</h2>
+<p>extend将任意可迭代对象追加到数据的末尾，<strong>原地修改，返回None</strong></p>
+<pre><code>In[]：
+help(list.extend)
+Out[]：
+Help on method_descriptor:
+extend(self, iterable, /)
+    Extend list by appending elements from the iterable.
+</code></pre>
+<p>值得注意的是，extend是把可迭代对象里的每一个值循环append到list里去，而不是像append，直接把一整个对象追加到列表的队尾</p>
+<ul>
+<li>append操作单个元素</li>
+<li>extend操作可迭代对象</li>
+</ul>
+<p>对比栗子：</p>
+<pre><code>In[]：
+new_l = [0,1,2]
+new_l.append([1,2,3])
+print(new_l)
+Out[]：
+[0, 1, 2, [1, 2, 3]]
+In[]：
+new_l = [0,1,2]
+new_l.extend([1,2,3])
+print(new_l)
+Out[]：
+[0, 1, 2, 1, 2, 3]
+</code></pre>
+<p><strong>list.extend经常用在两个列表的相加上</strong></p>
+<h2 id="list-list">list + list</h2>
+<p>两个列表的相加还可以直接用加号</p>
+<pre><code>In[]：
+l = [0,1,2,3,4]
+a = l + ['a','b','c']
+print('a:',a)
+print('l:',l)
+Out[]：
+a: [0, 1, 2, 3, 4, 'a', 'b', 'c']
+l: [0, 1, 2, 3, 4]
+</code></pre>
+<p><strong>这种方法有返回值，但是不修改list本身，返回一个新的list</strong>，这种操作叫list的连接操作</p>
+<h1 id="列表删除">列表删除</h1>
+<h2 id="listremove">list.remove</h2>
+<pre><code>In[]：
+help(list.remove)
+Out[]：
+Help on method_descriptor:
+remove(self, value, /)
+    Remove first occurrence of value.
+    Raises ValueError if the value is not present.
+</code></pre>
+<p>删除第一个匹配的元素</p>
+<pre><code>In[]：
+l = [1,2,3,2,3,4,3,5,3,4]
+l.remove(2)
+print(l)
+Out[]：
+[1, 3, 2, 3, 4, 3, 5, 3, 4]
+</code></pre>
+<p><strong>原地修改，返回None，根绝值删除元素</strong><br>
+当值不存在时，抛出ValueError</p>
+<pre><code>In[]：
+l = [1,2,3,2,3,4,3,5,3,4]
+l.remove(10)
+Out[]：
+ValueError                                Traceback (most recent call last)
+&lt;ipython-input-5-13fc432ba077&gt; in &lt;module&gt;
+      1 l = [1,2,3,2,3,4,3,5,3,4]
+----&gt; 2 l.remove(10)
+ValueError: list.remove(x): x not in list
+</code></pre>
+<h2 id="listpop">list.pop</h2>
+<pre><code>In[]：
+help(list.pop)
+Out[]：
+Help on method_descriptor:
+pop(self, index=-1, /)
+    Remove and return item at index (default last).
+    Raises IndexError if list is empty or index is out of range.
+</code></pre>
+<p>不传入参数，则默认返回并删除最后一个值<br>
+传入index参数，返回并删除index所在的值</p>
+<pre><code>In[]：
+l = [3,2,4,3,5,3,4]
+l.pop(3)
+print(l)
+Out[]：
+3
+[3, 2, 4, 5, 3, 4]
+</code></pre>
+<p><strong>注意：这个传入的参数是index，不是元素的值</strong><br>
+当索引不存在时，抛出IndexError</p>
+<pre><code>In[]：
+l = [3,2,4,3,5,3,4]
+l.pop(100)
+Out[]：
+IndexError                                Traceback (most recent call last)
+&lt;ipython-input-10-85aba9b20ee8&gt; in &lt;module&gt;
+      1 l = [3,2,4,3,5,3,4]
+----&gt; 2 l.pop(100)
+IndexError: pop index out of range
+</code></pre>
+<p>这里需要注意几点：</p>
+<ul>
+<li>pop不传递index参数，时间复杂度是O(1)</li>
+<li>pop传递index参数，时间复杂度是O(n)</li>
+<li>pop根据索引删除元素，并且返回删除的元素</li>
+<li>remove根据值删除元素，返回None</li>
+</ul>
+<h2 id="listclear">list.clear</h2>
+<pre><code>In[]：
+help(list.clear)
+Out[]：
+Help on method_descriptor:
+clear(self, /)
+    Remove all items from list.
+</code></pre>
+<p>删除所有元素</p>
+<pre><code>In[]：
+l = [3,2,3,5,3,4]
+l.clear()
+print(l)
+Out[]：
+[]
+</code></pre>
+<p>使用clear后，列表对象还存在，只是里面的值都被清空了</p>
+<h1 id="其它操作">其它操作</h1>
+<h2 id="求list的长度">求list的长度</h2>
+<p>len(l)</p>
+<pre><code>In[]：
+l = [3,2,3,5,3,4]
+len(l)
+Out[]：
+6
+</code></pre>
+<h2 id="反转列表">反转列表</h2>
+<p>l.reverse()</p>
+<pre><code>In[]：
+l = [0,1,2,3,4,5,6]
+l.reverse()
+print(l)
+Out[]：
+[6, 5, 4, 3, 2, 1, 0]
+</code></pre>
+<h2 id="列表排序">列表排序</h2>
+<p>l.sort()</p>
+<pre><code>In[]：
+l = [2,5,3,6,1,4,8,9]
+l.sort()
+print(l)
+Out[]：
+[1, 2, 3, 4, 5, 6, 8, 9]
+</code></pre>
+<p><strong>原地修改，返回None</strong><br>
+<strong>逆序排序，l.sort(reverse=True)</strong></p>
+<pre><code>In[]：
+l = [2,5,3,6,1,4,8,9]
+l.sort(reverse=True)
+print(l)
+Out[]：
+[9, 8, 6, 5, 4, 3, 2, 1]
+</code></pre>
+<h2 id="列表拷贝">列表拷贝</h2>
+<h3 id="引用传递">引用传递</h3>
+<pre><code>In[]：
+a = [1,2,3]
+b = a
+print(b)
+b[1] = 99
+print(b)
+print(a)
+Out[]：
+[1, 2, 3]
+[1, 99, 3]
+[1, 99, 3]
+</code></pre>
+<h3 id="浅复制浅拷贝">浅复制（浅拷贝）</h3>
+<pre><code>In[]：
+l = [1,2,3,4,5]
+l2 = l.copy()
+l2[0] = 'a'
+print(l)
+print(l2)
+Out[]：
+[1, 2, 3, 4, 5]
+['a', 2, 3, 4, 5]
+</code></pre>
+<p>如果列表存在嵌套列表</p>
+<pre><code>In[]：
+l = [1,[1,2,3],4]
+l2 = l.copy()
+l2[1][1] = 'a'
+print(l2)
+print(l)
+Out[]：
+[1, [1, 'a', 3], 4]
+[1, [1, 'a', 3], 4]
+</code></pre>
+<h3 id="深复制深拷贝">深复制（深拷贝）</h3>
+<p>使用深拷贝需要引入copy模块，使用deepcopy</p>
+<pre><code>In[]：
+from copy import deepcopy
+l = [1, [1, 'a', 3], 4]
+l2 = deepcopy(l)
+l2[1][1] = 'b'
+print(l2)
+print(l)
+Out[]：
+[1, [1, 'b', 3], 4]
+[1, [1, 'a', 3], 4]
+</code></pre>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/python-yuan-zu-ji-qi-chang-yong-cao-zuo" rel="prev"> Python元组及其常用操作</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/python-ji-ben-yu-fa" rel="next"> Python基本语法</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://yh0214.github.io/images/avatar.png" ></div>
+ 
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://yh0214.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Copyright © 2019 yanghang<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>

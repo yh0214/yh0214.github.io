@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>生成器 | yanghang</title>	
+
+<link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+            display = "https://yh0214.github.io/media/css/night.css";
+
+            display = "https://yh0214.github.io/media/css/night.css";   
+      
+            display = "https://yh0214.github.io/media/css/day.css";
+
+            display = "https://yh0214.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Noto+Sans+SC:300|Montserrat&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
+
+
+ 	
+</head>
+<body class="post-template-default single single-post postid-70 single-format-standard">
+    <div id="wrapper">
+        
+			
+		<header id="header" class="site-header" 
+		
+		>
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://yh0214.github.io" rel="home">yanghang</a></h1>
+										
+					<h2 class="site-description"></h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul id="" class="dove">
+		 
+
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
+						<div class="jingge">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+				
+<article id="post-70" class="post-70 post type-post status-publish format-standard hentry category-5 tag-10 tag-9 tag-11">
+
+	
+	                      
+		<div class="entry-content">
+			<h1 class="wow swing entry-title">生成器</h1>
+<div class="entry-meta">
+<div class="wow bounce">
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-09-23 09:42:18" itemprop="datePublished" pubdate="">2019-09-23</time></i>
+	          </div>
+			
+</span>
+													 
+		</div>
+                  
+			<div class="wow slideInLeft entry-summary song">
+				<p>生成器其实也是一个函数</p>
+<pre><code>def g():
+    for x in range(10):
+        yield x
+</code></pre>
+<p>使用了一个新的关键字yield，没有return会不会报错？</p>
+<pre><code>In[]：
+r = g()
+r
+Out[]：&lt;generator object g at 0x000000000613E1B0&gt;
+</code></pre>
+<p>可以看到返回的是一个generator</p>
+<pre><code>In[]：dir(r)
+Out[]：
+['__class__',
+ '__del__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__iter__',
+ '__le__',
+ '__lt__',
+ '__name__',
+ '__ne__',
+ '__new__',
+ '__next__',
+ '__qualname__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ 'close',
+ 'gi_code',
+ 'gi_frame',
+ 'gi_running',
+ 'gi_yieldfrom',
+ 'send',
+ 'throw']
+</code></pre>
+<p>它有'<strong>iter</strong>'方法，是一个可迭代对象<br>
+它有'<strong>next</strong>'方法，是一个迭代<br>
+使用next调用一下</p>
+<pre><code>In[]：next(r)
+Out[]：0
+</code></pre>
+<pre><code>In[]：next(r)
+Out[]：1
+</code></pre>
+<p>返回的是函数中x的值<br>
+有一个yield关键字，这个是一个迭代器，是迭代器里面的一个特殊内容，叫生成器<br>
+执行完一次r = g()，现场应该被销毁了，但是r还是有值，还是可以继续调用next，事实上，函数的现场并没有被销毁，这就是生成器函数和普通函数不太一样的地方<br>
+看下生成器是如何工作的</p>
+<pre><code>def gen():
+    print('a')
+    yield 1
+    print('b')
+    yield 2
+    return 3
+</code></pre>
+<p>定义了一个函数，有2个yield，1个return</p>
+<pre><code>In[]：g = gen()
+g
+Out[]：&lt;generator object gen at 0x0000000003259570&gt;
+</code></pre>
+<p>理论上，gen里面有return，应该有返回值，但是这个g还是一个generator，说明函数并没有被执行<br>
+接下来使用next调用</p>
+<pre><code>In[]：next(g)
+Out[]：
+a
+1
+</code></pre>
+<p>在这里，执行到第一个yield，就停止执行了<br>
+再执行一次next(g)</p>
+<pre><code>In[]：next(g)
+Out[]：
+b
+2
+</code></pre>
+<p>打印出了b，然后到2就又停止了，而之前的a并没有被打印出来，说明现场保留了<br>
+再执行一次next(g)</p>
+<pre><code>In[]：next(g)
+Out[]：
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+ in 
+----&gt; 1 next(g)
+
+StopIteration: 3
+</code></pre>
+<p>没有更多yield的时候，抛出StopIteration异常，还有一点需要注意的是，这个异常值就是它的返回值，没有返回值的话异常值就为空<br>
+总结一下：带yield语句的函数称为生成器函数，生成器函数的返回值是生成器<br>
+特点：</p>
+<ul>
+<li>生成器函数执行的时候，不会执行函数体（注意，这里是说生成器函数执行的时候，不是生成器执行的时候）</li>
+<li>当next生成器的时候，当前代码会执行到之后的第一个yield，会弹出值，并暂停函数</li>
+<li>当再次执行next生成器的时候，从上次暂停处开始往下执行</li>
+<li>当没有多余的yield的时候，会抛出StopIteration异常，如果函数有返回值，异常的value是函数的返回值</li>
+</ul>
+<p>生成器是惰性求值的，先来写一个计数器</p>
+<pre><code>def counter():
+    x = 0
+    while True:
+        x += 1
+        yield x
+
+def inc(c):
+    return next(c)
+</code></pre>
+<pre><code>In[]：c = counter()
+In[]: inc(c)
+Out[]：1
+</code></pre>
+<p>这样每次执行inc(c)都可以得到一个+1的值<br>
+还可以封装的更好</p>
+<pre><code>def inc():
+    c = counter()
+    return lambda : next(c)
+</code></pre>
+<p>还有一种更好的方法，可以把counter封装到inc里面</p>
+<pre><code>def inc():
+    def counter():
+        x = 0
+        while True:
+            x += 1
+            yield x
+    c = counter()
+    return lambda : next(c)
+</code></pre>
+<pre><code>In[]：incr = inc()
+In[]: incr()
+Out[]：1
+</code></pre>
+<pre><code>In[]：incr()
+Out[]：2
+</code></pre>
+<p>难点</p>
+<pre><code>def make_inc():
+    def counter():
+        x = 0
+        while True:
+            x += 1
+            yield x
+    c = counter()
+    return next(c)
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<pre><code>In[]：make_inc()
+Out[]：1
+</code></pre>
+<p>为什么再次执行还是得到1？<br>
+每次都会初始化一个c，给它一个新的生成器，所以每次都是1<br>
+使用lambda的话，只会生成一次c，后面每次都是调用这个函数<br>
+应用<br>
+斐波那契数列<br>
+首先看使用递归实现，递归非常慢</p>
+<pre><code>def fib(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1
+    return fib(n-1) + fib(n-2)
+</code></pre>
+<p>还可以使用生成器实现</p>
+<pre><code>def fib():
+    a = 0
+    b = 1
+    while True:
+        a,b = b,a + b
+        yield a
+</code></pre>
+<pre><code>In[]：
+f = fib()
+for _ in range(5):
+    print(next(f))
+Out[]：
+1
+1
+2
+3
+5
+</code></pre>
+<p>生成器可以解决递归问题<br>
+协程是生成器的高级应用</p>
+
+							</div>
+	<div class="wow bounceInDown vt-post-tags">
+ 
+					</div>						
+<nav class="navigation3 post-navigation3" role="navigation">
+		
+		<div class="nav-links3">
+      
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/gao-jie-han-shu" rel="prev"> 高阶函数</a></div>
+		 
+		 
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/ni-ming-han-shu" rel="next"> 匿名函数</a></div>
+		
+		</div>
+	</nav>
+	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">
+	<div class="author-avatar pull-left"><img src="https://yh0214.github.io/images/avatar.png" ></div>
+ 
+
+		</div>
+		
+ 
+		
+</article>
+
+<div id="marlin_lite_about_widget-2" class="wow bounceInUp widget marlin_lite_about_widget" data-wow-delay="0.1s">
+		
+        
+		<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://yh0214.github.io/media/scripts/Valine.min.js'></script>
+
+<div class="comment"></div>
+<script>
+        new Valine({
+            // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+            av: AV, 
+            el: '.comment',
+            lang: 'zh-cn',
+            
+            
+      emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+     	
+      	
+          
+        });
+    </script> 
+
+
+   
+  
+ 
+
+		</div>
+
+			</div>
+			
+
+
+<div class="tocc col l3 hide-on-med-and-down">
+	
+        <div class="toc-widget">
+			
+            <div class="toc-title"></div>
+			
+            <div id="toc-content">
+			
+			
+			</div>
+        </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.5.0/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '.entry-summary',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('.entry-summary').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>										 
+
+ 
+       
+
+
+			</div>
+		</div>
+
+		
+		 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright">Copyright © 2019 yanghang<br>Theme:   <a href="https://github.com/alterfang/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>. Powered by <a href="https://gridea.dev/" target="_blank" title="Gridea"><span>Gridea</span></a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://yh0214.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+		<script data-no-instant>
+    (function ($) {
+        $.extend({
+            adamsOverload: function () {
+                $('.navigation:eq(0)').remove();
+                $("").attr("rel" , "external");
+                $("a[rel='external'],a[rel='external nofollow']").attr("target","_blank");
+                $("a.vi").attr("rel" , "");
+                $.viewImage({
+                    'target'  : 'img',
+                    'exclude' : '.vsmile-icons img,.gallery img',
+                    'delay'   : 300
+                });
+                $.lately({
+                    'target' : '.commentmetadata a,.infos time,.post-list time'
+                });
+                prettyPrint();
+                
+                $('ul.links li a').each(function(){
+                    if($(this).parent().find('.bg').length==0){
+                        $(this).parent().append('<!---<div class="bg" style="background-image:url(https://c3.glgoo.top/s2/favicons?domain='+$(this).attr("href")+')"></div>--->')
+                    }
+                });
+            }
+        });
+    })(jQuery);
+    jQuery.adamsOverload();
+</script>
+
+</body>
+</html>
