@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>面向对象基础 | yanghang</title>	
+<title>类的创建&amp;调用 | yanghang</title>	
 
 <link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
 <script type="text/javascript">
@@ -118,10 +118,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">面向对象基础</h1>
+			<h1 class="wow swing entry-title">类的创建&amp;调用</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-10-16 09:07:30" itemprop="datePublished" pubdate="">2019-10-16</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-10-30 08:48:14" itemprop="datePublished" pubdate="">2019-10-30</time></i>
 	          </div>
 			
 </span>
@@ -129,67 +129,44 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>面向对象（OOP）是一种编程范式<br>
-范式可以认为是一组方法论<br>
-编程范式就是一组如何组织代码的方法论<br>
-OOP的世界观：<br>
-世界是由对象组成的<br>
-对象具有运动规律和内部状态<br>
-对象之间可以相互作用<br>
-OOP的特征：<br>
-封装<br>
-继承<br>
-多态<br>
-类的定义</p>
-<pre><code>class Door:
-    def __init__(self,number,status):
-        self.number = number
-        self.status = status
+				<p>类，一群有共同的特征和行为的事物<br>
+类名，标识符，大驼峰命名法<br>
+类的表示方法</p>
+<pre><code>class DaLao:
+    pass
+</code></pre>
+<p>特征又被称为属性，类属性，类成员都具备的共同点。<br>
+特征由变量表示，变量写在类下面</p>
+<pre><code>class DaLao:
+    haird = &quot;low&quot;
+    eyed = &quot;class&quot;
+    fav_shoes = &quot;tuo shoes&quot;
 
-door = Door(10001,'closed')
-</code></pre>
-<pre><code>In[]：door.number
-Out[]：10001
-</code></pre>
-<p>看一下self</p>
-<pre><code>class D:
-    def __init__(self):
-        print(id(self))
-</code></pre>
-<pre><code>In[]：d = D()
-Out[]：101570264
-</code></pre>
-<pre><code>In[]：id(d)
-Out[]：101570264
-</code></pre>
-<p>这个self就是d，而且是先有的self<br>
-__init__函数并不是来生成对象的，只是来初始化类<br>
-类中定义方法及调用</p>
-<pre><code>class Door:
-    def __init__(self,number,status):
-        self.number = number
-        self.status = status
-    
-    def open(self):
-        self.status = &quot;opening&quot;
 
-    def close(self):
-        self.status = &quot;closed&quot;
+print(DaLao.haird)
+print(DaLao.eyed)
 </code></pre>
-<pre><code>door = Door(10001,'closed')
-</code></pre>
-<pre><code>In[]：door.status
-Out[]：'closed'
-</code></pre>
-<pre><code>door.open()
-</code></pre>
-<pre><code>In[]：door.status
-Out[]：'opening'
-</code></pre>
-<pre><code>door.close()
-</code></pre>
-<pre><code>In[]：door.status
-Out[]：'closed'
+<p>对象：某个类下面具体的一个个体<br>
+在类里面定义的函数称为方法<br>
+初始化方法也叫构造函数 只能返回None<br>
+初始化对象的时候自动调用__init__方法<br>
+实例 = 对象<br>
+类变量 = 类属性<br>
+实例变量 = 实例属性<br>
+实例变量是表示某一个对象拥有的特征</p>
+<pre><code>class SingleDog:
+    freedom = True
+    favor = &quot;吃狗粮&quot;
+    sports_hobby = &quot;睡觉&quot;
+
+    def __init__(self,name,favor_game):
+        self.name = name
+        self.favor_game = favor_game
+        print('hello')
+
+
+single_dog = SingleDog('huhu','abc')
+print(single_dog)
 </code></pre>
 
 							</div>
@@ -200,10 +177,10 @@ Out[]：'closed'
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/os" rel="prev"> 包和模块</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/lei-de-fang-fa-andbian-liang" rel="prev"> 类的方法&amp;变量</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/dai-can-shu-de-zhuang-shi-qi" rel="next"> 带参数的装饰器</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/osandwen-jian-cao-zuo-andyi-chang-chu-li" rel="next"> 路径处理&amp;文件读写&amp;异常处理</a></div>
 		
 		</div>
 	</nav>

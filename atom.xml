@@ -2,13 +2,335 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yh0214.github.io</id>
     <title>yanghang</title>
-    <updated>2019-10-21T01:06:33.940Z</updated>
+    <updated>2019-11-06T01:38:22.552Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yh0214.github.io"/>
     <link rel="self" href="https://yh0214.github.io/atom.xml"/>
     <logo>https://yh0214.github.io/images/avatar.png</logo>
     <icon>https://yh0214.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, yanghang</rights>
+    <entry>
+        <title type="html"><![CDATA[类的方法&变量]]></title>
+        <id>https://yh0214.github.io/post/lei-de-fang-fa-andbian-liang</id>
+        <link href="https://yh0214.github.io/post/lei-de-fang-fa-andbian-liang">
+        </link>
+        <updated>2019-10-30T03:07:07.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>class Mobile:
+    has_logo = True
+    has_ram = True
+
+    def __init__(self,model,brand):
+        # 把参数转化成实例变量
+        self.mobile_model = model
+        self.brand = brand
+
+    def capture(self):
+        # 实例方法中使用类变量
+        print(self.has_logo)
+        print(&quot;{}正在照相&quot;.format(self.brand))
+
+    def beautify_cap(self):
+        self.capture()
+        print(&quot;修照片&quot;)
+
+    @classmethod
+    def if_logo(cls):
+        # 类方法
+        # 类方法很少使用
+        print(cls.has_logo)
+
+    @staticmethod
+    def check_weather():
+        print(&quot;今天天气......&quot;)
+</code></pre>
+<p>对象的实例化</p>
+<pre><code>iphone5 = Mobile('5', '苹果')
+</code></pre>
+<p>怎么去使用类的变量 类的变量包含类变量和实例变量</p>
+<pre><code>print(iphone5.mobile_model)
+print(iphone5.brand)
+</code></pre>
+<p>类外面使用类变量</p>
+<pre><code>print(Mobile.has_logo)
+print(iphone5.has_logo)
+</code></pre>
+<p>对象调用实例方法<br>
+iphone5.capture()</p>
+<p>类变量和实例变量有什么区别？<br>
+类变量能同时被类和实例访问，实例变量只能被实例自己访问</p>
+<p>实例属性放在__init__中定义，self.相关的属性优先放在__init__中定义</p>
+<p>静态方法和这个类以及对象没有关系，但是有关联<br>
+静态方法和普通函数相比，好处是方便管理<br>
+例子</p>
+<pre><code>class InterViewer:
+
+    def __init__(self, name):
+        self.name = name
+
+    def offer(self, money, time):
+        print(&quot;{} 收了一个大 offer：月薪{},k {}天到岗&quot;.format(self.name, money, time))
+        return '拿 offer'
+
+    def eat(self, food):
+        print(&quot;{} 最喜欢吃 {}&quot;.format(self.name, food))
+
+    def interviwing(self):
+        print(&quot;正在面试&quot;)
+
+
+cainiao = InterViewer('菜鸟')
+print(cainiao.offer(50, 1))
+cainiao.interviwing()
+</code></pre>
+<pre><code>class FileHandler:
+    def __init__(self,filename,encoding='utf-8'):
+        self.filename = filename
+        self.encoding = encoding
+
+    def read_file(self):
+        with open(self.filename, mode='r', encoding=self.encoding) as f:
+            a = f.read()
+        return a
+
+    def write_file(self, data,mode='w'):
+        with open(self.filename, mode=mode, encoding=self.encoding) as f:
+            f.write(data)
+
+
+handler = FileHandler('demo.txt')
+print(handler.read_file())
+
+handler.write_file('147258369',mode='a')
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[类的创建&调用]]></title>
+        <id>https://yh0214.github.io/post/lei-de-chuang-jian-anddiao-yong</id>
+        <link href="https://yh0214.github.io/post/lei-de-chuang-jian-anddiao-yong">
+        </link>
+        <updated>2019-10-30T00:48:14.000Z</updated>
+        <content type="html"><![CDATA[<p>类，一群有共同的特征和行为的事物<br>
+类名，标识符，大驼峰命名法<br>
+类的表示方法</p>
+<pre><code>class DaLao:
+    pass
+</code></pre>
+<p>特征又被称为属性，类属性，类成员都具备的共同点。<br>
+特征由变量表示，变量写在类下面</p>
+<pre><code>class DaLao:
+    haird = &quot;low&quot;
+    eyed = &quot;class&quot;
+    fav_shoes = &quot;tuo shoes&quot;
+
+
+print(DaLao.haird)
+print(DaLao.eyed)
+</code></pre>
+<p>对象：某个类下面具体的一个个体<br>
+在类里面定义的函数称为方法<br>
+初始化方法也叫构造函数 只能返回None<br>
+初始化对象的时候自动调用__init__方法<br>
+实例 = 对象<br>
+类变量 = 类属性<br>
+实例变量 = 实例属性<br>
+实例变量是表示某一个对象拥有的特征</p>
+<pre><code>class SingleDog:
+    freedom = True
+    favor = &quot;吃狗粮&quot;
+    sports_hobby = &quot;睡觉&quot;
+
+    def __init__(self,name,favor_game):
+        self.name = name
+        self.favor_game = favor_game
+        print('hello')
+
+
+single_dog = SingleDog('huhu','abc')
+print(single_dog)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[路径处理&文件读写&异常处理]]></title>
+        <id>https://yh0214.github.io/post/osandwen-jian-cao-zuo-andyi-chang-chu-li</id>
+        <link href="https://yh0214.github.io/post/osandwen-jian-cao-zuo-andyi-chang-chu-li">
+        </link>
+        <updated>2019-10-29T07:07:46.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>路径处理<pre><code>import os
+</code></pre>
+</li>
+<li>获取当前工作的文件夹路径，此路径是指在哪里运行python文件，此方法不经常使用<pre><code>print(os.getcwd())
+</code></pre>
+</li>
+<li>文件的绝对路径，非常有用</li>
+</ul>
+<pre><code> print(os.path.abspath(__file__))
+</code></pre>
+<ul>
+<li>
+<p>获取文件路径的文件夹路径</p>
+<pre><code>dir_name = os.path.dirname(os.path.abspath(__file__))
+</code></pre>
+</li>
+<li>
+<p>路径拼接</p>
+<pre><code>new_dir = os.path.join(dir_name,'data')
+</code></pre>
+</li>
+<li>
+<p>创建文件夹，使用该方法创建要一层一层创建，否则会报错</p>
+<pre><code>os.mkdir(new_dir)
+</code></pre>
+</li>
+<li>
+<p>首先判断文件夹是否存在，存在则再去创建</p>
+<pre><code>new_dir = os.path.join(dir_name,'data','cases')
+new_dir_data = os.path.dirname(new_dir)
+if os.path.exists(new_dir_data):
+    os.mkdir(new_dir)
+else:
+    print('data文件夹不存在')
+</code></pre>
+</li>
+<li>
+<p>判断是否是一个文件夹，返回True或者False</p>
+<pre><code>print(os.path.isdir(new_dir))
+</code></pre>
+</li>
+<li>
+<p>判断是否是一个文件，返回True或者False</p>
+<pre><code>print(os.path.isfile(new_dir))
+</code></pre>
+</li>
+<li>
+<p>打开文件 文件内容有汉字时使用utf-8打开</p>
+<pre><code>f = open('demo.txt',encoding='utf-8')
+</code></pre>
+</li>
+<li>
+<p>读文件</p>
+<pre><code>print(f.read())
+</code></pre>
+</li>
+<li>
+<p>一行一行读取文件</p>
+<pre><code>f = open('demo.txt',encoding='utf-8')
+print(f.readlines())
+</code></pre>
+</li>
+<li>
+<p>写文件 mode为'w'，如果文件已经存在，写入内容的时候，原来的文件内容会被覆盖</p>
+</li>
+<li>
+<p>如果不想被覆盖，mode应该使用'a'</p>
+</li>
+<li>
+<p>mode为'x'，创作模式，文件已经存在时使用x模式会报错</p>
+<pre><code>f = open('demo.txt',mode='w',encoding='utf-8')
+f.write('呼呼，哈哈')
+</code></pre>
+</li>
+<li>
+<p>关闭文件，当打开文件执行了操作后，一定要记得关闭</p>
+<pre><code>f.close()
+</code></pre>
+</li>
+<li>
+<p>防止忘记关闭文件</p>
+<pre><code>with open('demo.txt',mode='r',encoding='utf-8') as f:
+  print(f.read())
+</code></pre>
+</li>
+<li>
+<p>异常处理<br>
+try:<br>
+执行代码<br>
+except 错误类型1：<br>
+pass<br>
+except 错误类型2：<br>
+pass<br>
+except (错误类型3,错误类型4):<br>
+pass</p>
+</li>
+</ul>
+<pre><code>try:
+    1/0
+    mylist = [1, 2, 3, 4, 5, 6]
+    mylist[100]
+except IndexError:
+    print('wrong2')
+except ZeroDivisionError:
+    print('wrong')
+</code></pre>
+<ul>
+<li>try：遇到错误代码就会终止分支，只会执行except ZeroDivisionError分支</li>
+<li>异常处理写except Exception，不写具体错误类型，会不好定位问题<br>
+为什么进行异常处理？<br>
+为了让程序按我们的想法执行。<br>
+手动抛出异常 raise</li>
+</ul>
+<pre><code>class MyError(Exception):
+    pass
+
+
+try:
+    mylist = [1, 2, 3]
+    mylist[4]
+    1 / 0
+except (ZeroDivisionError, IndexError) as e:
+    raise MyError
+</code></pre>
+<p>finally</p>
+<pre><code>try:
+    mylist = [1, 2, 3]
+    mylist[4]
+    1 / 0
+except (ZeroDivisionError, IndexError) as e:
+    print('error')
+finally:
+    print('douhuiyuxning')
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[包和模块]]></title>
+        <id>https://yh0214.github.io/post/os</id>
+        <link href="https://yh0214.github.io/post/os">
+        </link>
+        <updated>2019-10-21T01:21:51.000Z</updated>
+        <content type="html"><![CDATA[<p>模块是Python程序架构的一个核心概念<br>
+以py为后缀名的文件就是模块，含有__init__.py的目录叫做包<br>
+智能导入：alt + enter<br>
+导入方式：<br>
+1、import + 模块名，使用这种方式调用函数时必须用import后面的所有部分.函数来调用<br>
+2、import + 模块名 as 别名<br>
+3、from 包.模块名 import 函数名<br>
+4、from 包 import 模块名<br>
+5、from 包 import 模块名 as 别名<br>
+6、from ... import * 引入所有的方法，尽量不使用此方法<br>
+别名的使用场景：<br>
+1、名字比较长 2、导入的名字和在这个文件当中存在同名的情况<br>
+包 --&gt; 模块 --&gt; 函数（类），变量<br>
+包是表示存储python代码的文件夹，在以前的python版本中package中有__init__.py才被认为是包，在新版本的python中package中没有__init__.py也被认为是包<br>
+模块的搜索顺序<br>
+在导入模块时：</p>
+<ul>
+<li>搜索当前目录指定模块的文件，如果有就直接导入</li>
+<li>如果没有，再搜索系统目录</li>
+<li>将某个路径添加到系统系统下：sys.path.append('C:\class_09_modules')</li>
+<li>每一个模块都有一个内置属性__file__ 可以查看模块的完整路径<br>
+__name__属性</li>
+<li>测试模块的代码只在测试情况下被运行，而在导入时不会被执行</li>
+<li>__name__是一个内置属性</li>
+<li>如果被其他文件导入的，__name__就是模块名</li>
+<li>如果是当前执行的程序，<strong>name__是__main</strong></li>
+</ul>
+<p><strong>main__是程序入口，运行的哪一个文件，那么那一个文件就叫__main</strong><br>
+if <strong>name</strong> == '<strong>main</strong>':  用来测试模块</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[面向对象基础]]></title>
         <id>https://yh0214.github.io/post/mian-xiang-dui-xiang-ji-chu</id>
@@ -779,143 +1101,6 @@ Out[]：[2, 4, 6]
 <pre><code>In[]：list(filter(lambda x:x&lt;30,[16,18,32]))
 Out[]：[16, 18]
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[函数的执行流程 & 递归函数]]></title>
-        <id>https://yh0214.github.io/post/han-shu-de-zhi-xing-liu-cheng-and-di-gui-han-shu</id>
-        <link href="https://yh0214.github.io/post/han-shu-de-zhi-xing-liu-cheng-and-di-gui-han-shu">
-        </link>
-        <updated>2019-09-19T14:24:55.000Z</updated>
-        <content type="html"><![CDATA[<p>函数的执行流程<br>
-当调用函数的时候，解释器会把当前现场压栈，然后执行被调函数。被调函数执行完成，解释器弹出当前栈顶，恢复现场<br>
-递归函数<br>
-程序调用自身的编程技巧称为递归</p>
-<pre><code>def fib(n):
-    if n == 0:
-        return 1
-    if n == 1:
-        return 1
-    return fib(n-1) + fib(n-2)
-</code></pre>
-<p><strong>递归函数必须要有退出条件</strong></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python函数的作用域]]></title>
-        <id>https://yh0214.github.io/post/python-han-shu-de-zuo-yong-yu</id>
-        <link href="https://yh0214.github.io/post/python-han-shu-de-zuo-yong-yu">
-        </link>
-        <updated>2019-09-16T09:02:19.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="定义">定义</h1>
-<p>一个变量的可见范围叫做这个变量的作用域</p>
-<h1 id="全局作用域">全局作用域</h1>
-<h1 id="局部作用域">局部作用域</h1>
-<p>变量的作用域为变量定义同级的作用域，也就是在哪一个级别定义的，在哪一个级别就可见</p>
-<h1 id="上-下级作用域">上、下级作用域</h1>
-<p>上级作用域对下级作用域是只读的，read-only的<br>
-不同作用域变量不可见，但是下级作用域可以对上级作用域的变量只读可见</p>
-<h1 id="全局变量global">全局变量global</h1>
-<p>global关键字可以提升变量作用域为全局变量<br>
-global的提升只对本作用域有用，那么我们需要让他在其他局部作用域有用，就需要再标记</p>
-<h1 id="闭包函数">闭包函数</h1>
-<pre><code>def counter():
-    c = [0]
-    def inc():
-        c[0] += 1
-        return c[0]
-    return inc
-f = counter()
-f()
-</code></pre>
-<p>这种形式我们称为闭包，函数已经结束，但是函数内部部分变量的引用还存在<br>
-理论上执行完f = counter()后，这个c已经没有了，但是我们通过inc可以继续访问，这种就称为闭包</p>
-<h1 id="局部变量">局部变量</h1>
-<pre><code>def counter():
-    x = 0
-    def inc():
-        nonlocal x
-        x += 1
-        return x
-    return inc
-f = counter()
-f()
-</code></pre>
-<p>nonlocal关键字用来标记一个变量由他的上级作用域定义，通过nonlocal标记的变量可读可写</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python函数的基础]]></title>
-        <id>https://yh0214.github.io/post/python-han-shu-de-ji-chu</id>
-        <link href="https://yh0214.github.io/post/python-han-shu-de-ji-chu">
-        </link>
-        <updated>2019-09-16T02:11:16.000Z</updated>
-        <content type="html"><![CDATA[<p>函数是Python里组织代码的最小单元<br>
-定义函数的时候，并不会执行函数体<br>
-当调用函数的时候，才会执行其中的语句块<br>
-Python在导入模块的时候，是会去执行一遍该文件</p>
-<h1 id="函数参数">函数参数</h1>
-<p>位置参数<br>
-关键字参数<br>
-注意：<strong>当位置参数和关键字参数混合使用时，位置参数必须在前面，否则会报语法错误</strong><br>
-默认参数<br>
-参数可以有默认值，当一个参数有默认值时，调用时如果不传递此此参数，会有默认值<br>
-注意：带默认值的参数必须在不带默认值的参数之后<br>
-位置可变参数<br>
-在参数前面加一个星号</p>
-<pre><code>In[]：
-def sum(*lst):
-    ret = 0
-    for x in lst:
-        ret += x
-    return ret
-print(sum(1,2,3))
-Out[]：
-6
-</code></pre>
-<p>关键字可变参数</p>
-<pre><code>In[]：
-def connect(**kwargs):
-    print(type(kwargs))
-    print(kwargs)
-connect(host='127.0.0.1',port=3601)
-Out[]：
-&lt;class 'dict'&gt;
-{'host': '127.0.0.1', 'port': 3601}
-</code></pre>
-<p>注意：当位置可变参数和关键字可变参数一起使用时，位置可变参数必须在前面<br>
-通常来说：<br>
-默认参数靠后<br>
-可变参数靠后<br>
-默认参数和可变参数不同时出现</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python可迭代对象与迭代器]]></title>
-        <id>https://yh0214.github.io/post/python-ke-die-dai-dui-xiang-yu-die-dai-qi</id>
-        <link href="https://yh0214.github.io/post/python-ke-die-dai-dui-xiang-yu-die-dai-qi">
-        </link>
-        <updated>2019-09-10T07:03:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="可迭代对象">可迭代对象</h1>
-<pre><code>In[]：
-r = range(10)
-r.__iter__
-Out[]：
-&lt;method-wrapper '__iter__' of range object at 0x0000000006013570&gt;
-</code></pre>
-<p>有__iter__方法的对象叫可迭代对象<br>
-for in语句需要可迭代对象</p>
-<h1 id="迭代器">迭代器</h1>
-<p>迭代器是可迭代对象</p>
-<pre><code>In[]：
-it = iter(range(10))
-it.__next__
-Out[]：
-&lt;method-wrapper '__next__' of range_iterator object at 0x000000000628CD50&gt;
-</code></pre>
-<p>有__next__方法的可迭代对象叫迭代器<br>
-可迭代对象可以转换为迭代器<br>
-iter函数可以把一个可迭代对象转换为迭代器</p>
 ]]></content>
     </entry>
 </feed>
