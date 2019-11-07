@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>类的方法&amp;变量 | yanghang</title>	
+<title>类的继承 | yanghang</title>	
 
 <link rel="stylesheet" href="https://yh0214.github.io/styles/main.css">
 <script type="text/javascript">
@@ -118,10 +118,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">类的方法&amp;变量</h1>
+			<h1 class="wow swing entry-title">类的继承</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-10-30 11:07:07" itemprop="datePublished" pubdate="">2019-10-30</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2019-11-06 09:40:17" itemprop="datePublished" pubdate="">2019-11-06</time></i>
 	          </div>
 			
 </span>
@@ -129,92 +129,89 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<pre><code>class Mobile:
-    has_logo = True
-    has_ram = True
+				<pre><code>class DalaoParent:
+    def __init__(self, money):
+        self.money = money
 
-    def __init__(self,model,brand):
-        # 把参数转化成实例变量
-        self.mobile_model = model
+    def xiaomubiao(self, money):
+        print(f&quot;大佬今年定{money}的小目标&quot;)
+
+    def paiting(self,type):
+        print('想做什么就做什么')
+
+class Dalao(DalaoParent):
+    # def __init__(self, money):
+    #     self.money = money
+    def paiting(self, type):
+        super().paiting(type)
+        print(f'想当{type}派画家')
+
+
+xixi = Dalao(10000)
+print(xixi.money)
+xixi.xiaomubiao(20000)
+xixi.paiting('野兽')
+
+xx_parent = DalaoParent(30000)
+xx_parent.paiting('抽象')
+</code></pre>
+<pre><code>class Mobile:
+    def __init__(self, brand, model, color):
         self.brand = brand
+        self.model = model
+        self.color = color
+        print('Mobile正在初始化')
 
-    def capture(self):
-        # 实例方法中使用类变量
-        print(self.has_logo)
-        print(&quot;{}正在照相&quot;.format(self.brand))
+    def call(self, phone_number):
+        print(f'呼叫电话号码{phone_number}')
 
-    def beautify_cap(self):
-        self.capture()
-        print(&quot;修照片&quot;)
+class IphoneMobile(Mobile):
+    brand = '苹果'
 
-    @classmethod
-    def if_logo(cls):
-        # 类方法
-        # 类方法很少使用
-        print(cls.has_logo)
-
-    @staticmethod
-    def check_weather():
-        print(&quot;今天天气......&quot;)
+    def __init__(self, model, color):
+        # self.model = model
+        # self.color = color
+        # Mobile(self.brand, model, color)
+        # super().__init__(self.brand, model, color)
+        # Mobile(self.brand, model, color).call('123')
+        super().call('123')
+        print('Iphone正在初始化')
+iphone5 = IphoneMobile('5', '黑色')
 </code></pre>
-<p>对象的实例化</p>
-<pre><code>iphone5 = Mobile('5', '苹果')
-</code></pre>
-<p>怎么去使用类的变量 类的变量包含类变量和实例变量</p>
-<pre><code>print(iphone5.mobile_model)
-print(iphone5.brand)
-</code></pre>
-<p>类外面使用类变量</p>
-<pre><code>print(Mobile.has_logo)
-print(iphone5.has_logo)
-</code></pre>
-<p>对象调用实例方法<br>
-iphone5.capture()</p>
-<p>类变量和实例变量有什么区别？<br>
-类变量能同时被类和实例访问，实例变量只能被实例自己访问</p>
-<p>实例属性放在__init__中定义，self.相关的属性优先放在__init__中定义</p>
-<p>静态方法和这个类以及对象没有关系，但是有关联<br>
-静态方法和普通函数相比，好处是方便管理<br>
-例子</p>
-<pre><code>class InterViewer:
+<p>重写 <strong>init__方法被重写了，不会用父类里买的__init</strong><br>
+super()的作用 如果想使用父类里面的方法 1、Parent().方法() 2、super().方法()<br>
+多重继承</p>
+<pre><code>class Mobile:
+    def __init__(self, brand, model, color):
+        self.brand = brand
+        self.model = model
+        self.color = color
+        print('Mobile正在初始化')
 
-    def __init__(self, name):
-        self.name = name
+    def call(self, phone_number):
+        print(f'呼叫电话号码{phone_number}')
 
-    def offer(self, money, time):
-        print(&quot;{} 收了一个大 offer：月薪{},k {}天到岗&quot;.format(self.name, money, time))
-        return '拿 offer'
+    def say(self, data):
+        print(f'普通手机正在说{data}')
 
-    def eat(self, food):
-        print(&quot;{} 最喜欢吃 {}&quot;.format(self.name, food))
+class Game:
+    def play(self, name):
+        print(f'正在玩{name}')
 
-    def interviwing(self):
-        print(&quot;正在面试&quot;)
+class Voice:
+    def say(self, data):
+        print(f'手机正在说{data}')
+
+class SmartPhone(Mobile, Voice, Game):
+    '''智能手机'''
+    # def say(self, data):
+    #     print(f'智能手机正在说{data}')
 
 
-cainiao = InterViewer('菜鸟')
-print(cainiao.offer(50, 1))
-cainiao.interviwing()
-</code></pre>
-<pre><code>class FileHandler:
-    def __init__(self,filename,encoding='utf-8'):
-        self.filename = filename
-        self.encoding = encoding
-
-    def read_file(self):
-        with open(self.filename, mode='r', encoding=self.encoding) as f:
-            a = f.read()
-        return a
-
-    def write_file(self, data,mode='w'):
-        with open(self.filename, mode=mode, encoding=self.encoding) as f:
-            f.write(data)
-
-
-handler = FileHandler('demo.txt')
-print(handler.read_file())
-
-handler.write_file('147258369',mode='a')
+smart_phone = SmartPhone(&quot;苹果&quot;, &quot;8&quot;, &quot;红色&quot;)
+smart_phone.call('186')
+smart_phone.play('王者荣耀')
+smart_phone.say('666')
 </code></pre>
 
 							</div>
@@ -225,10 +222,10 @@ handler.write_file('147258369',mode='a')
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/lei-de-ji-cheng" rel="prev"> 类的继承</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://yh0214.github.io/post/dan-yuan-ce-shi-kuang-jia" rel="prev"> 单元测试框架</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/lei-de-chuang-jian-anddiao-yong" rel="next"> 类的创建&amp;调用</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://yh0214.github.io/post/lei-de-fang-fa-andbian-liang" rel="next"> 类的方法&amp;变量</a></div>
 		
 		</div>
 	</nav>
